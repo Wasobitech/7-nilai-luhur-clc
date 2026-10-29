@@ -84,27 +84,37 @@
     <!-- Header / Navbar -->
     <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center font-bold text-slate-900 text-xl shadow-inner">
+            <div class="flex items-center justify-between min-h-[4rem] py-2 gap-3">
+                <!-- Brand / Title Container -->
+                <div class="flex items-center space-x-3 min-w-0 flex-1">
+                    <div class="w-9 h-9 rounded-lg bg-amber-500 flex-shrink-0 flex items-center justify-center font-bold text-slate-900 text-xl shadow-inner">
                         CLC
                     </div>
-                    <div>
-                        <span class="font-bold text-lg tracking-wide text-white block leading-none">PT CAHAYA LANGIT CEMERLANG</span>
-                        <span class="text-xs text-amber-400 tracking-wider uppercase font-semibold">Portal Interaktif Budaya & Riset 7 Nilai Utama</span>
+                    <div class="min-w-0 flex-1">
+                        <span class="font-bold text-sm sm:text-base md:text-lg tracking-wide text-white block truncate leading-tight">
+                            PT CAHAYA LANGIT CEMERLANG
+                        </span>
+                        <span class="text-[10px] sm:text-xs text-amber-400 tracking-wider uppercase font-semibold block truncate">
+                            Portal Interaktif Budaya & Riset 7 Nilai Utama
+                        </span>
                     </div>
                 </div>
-                <div class="hidden lg:flex space-x-1 text-sm font-medium" id="desktop-nav">
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex space-x-1 text-sm font-medium flex-shrink-0" id="desktop-nav">
                     <!-- Nav Items populated via JS -->
                 </div>
-                <div class="lg:hidden">
-                    <button id="mobile-menu-btn" class="p-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none">
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex-shrink-0">
+                    <button id="mobile-menu-btn" aria-label="Toggle Menu" class="p-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
                         ☰
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile menu -->
+
+        <!-- Mobile menu dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden bg-slate-800 border-t border-slate-700 px-4 pt-2 pb-4 space-y-1 text-sm">
             <!-- Mobile Nav Items populated via JS -->
         </div>
