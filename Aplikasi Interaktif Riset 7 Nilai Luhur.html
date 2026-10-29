@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Cahaya Langit Cemerlang - Interaktif 7 Nilai Luhur & Budaya Organisasi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        amberbrand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        },
+                        slatebrand: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Mandatory Placeholder Comments -->
+    <!-- Chosen Palette: Warm Neutral Executive Palette (Background: Slate-50/Warm Sand, Primary Header: Slate-900, Accent Gold: Amber-600, Accent Teal: Teal-600, Sky: Sky-600) -->
+    <!-- Application Structure Plan: The SPA is structured into 7 thematic interactive modules: (1) Value Pillars Explorer with cluster filters & dynamic radar chart, (2) BARS 1-5 Interactive Behavioral Assessment Tool & Matrix, (3) Industry Benchmark Dashboard comparing Cahaya Langit Cemerlang, Sinar Mas, and Astra with grouped bar chart, (4) Cultural Barriers Diagnostic & Mitigation Assessment Tool, (5) HR Lifecycle Integration & Interactive Dual-Track Performance Score Calculator (OKR 60% + BARS 40% with 9-Box placement simulation), (6) Culture Metrology Dashboard & Partner Net Promoter Score (PNPS) Simulator, and (7) Executive Action Roadmap with interactive progress trackers. This structure flows logically from foundational values to behavioral standards, competitive positioning, HR application, and executive metrics. -->
+    <!-- Visualization & Content Choices:
+    1. 7 Values Radar Chart: Goal -> Show balance across 7 value dimensions -> Method -> Chart.js Radar Chart -> Interaction -> Dynamic cluster toggle & hover tooltips -> Justification -> Canvas-based, no SVG, visualizes cultural equilibrium effectively.
+    2. BARS Dynamic Slider & Matrix: Goal -> Explore 1-5 behavioral scale per value -> Method -> JS Dynamic State Update -> Interaction -> Slider level adjustment & value switching -> Justification -> Allows granular behavioral exploration without clutter.
+    3. Benchmark Comparison Chart: Goal -> Contrast strategy with Sinar Mas and Astra -> Method -> Chart.js Grouped Bar Chart -> Interaction -> Dynamic dataset toggling -> Justification -> Highlights unique ecosystem focus (Nilai 07).
+    4. Dual-Track Performance Calculator: Goal -> Calculate composite performance score and 9-Box talent placement -> Method -> JS Math Engine & Dynamic UI Updates -> Interaction -> Live sliders for OKR % & BARS rating -> Justification -> Gives HR leaders practical simulation tool.
+    5. PNPS Calculator: Goal -> Calculate Partner Net Promoter Score -> Method -> JS Interactive Form & Chart.js Doughnut Chart -> Interaction -> Live numeric inputs for Promoters/Passives/Detractors -> Justification -> Makes vendor metric actionable.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Header / Navbar -->
+    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center font-bold text-slate-900 text-xl shadow-inner">
+                        CLC
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-wide text-white block leading-none">PT CAHAYA LANGIT CEMERLANG</span>
+                        <span class="text-xs text-amber-400 tracking-wider uppercase font-semibold">Portal Interaktif Budaya & Riset 7 Nilai Utama</span>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-1 text-sm font-medium" id="desktop-nav">
+                    <!-- Nav Items populated via JS -->
+                </div>
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        ☰
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-800 border-t border-slate-700 px-4 pt-2 pb-4 space-y-1 text-sm">
+            <!-- Mobile Nav Items populated via JS -->
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- HERO / INTRO BANNER -->
+        <section class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-6 md:p-8 shadow-xl border border-slate-700 relative overflow-hidden">
+            <div class="relative z-10 max-w-4xl space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                    <span>Dokumen & Riset Strategis 2026</span>
+                </div>
+                <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                    Evaluasi Komprehensif & Strategi Internalisasi <span class="text-amber-400">7 Nilai Luhur Korporasi</span>
+                </h1>
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    Aplikasi interaktif ini menerjemahkan laporan riset mendalam mengenai 7 Nilai Utama (*The 7 Pillars*) PT Cahaya Langit CemerLANG ke dalam modul analisis, alat simulasi BARS, kalkulator kinerja *Dual-Track*, dan instrumen metrologi ekosistem. Gunakan portal ini untuk memahami, mengevaluasi, dan mengimplementasikan budaya organisasi berbasis keunggulan berkelanjutan.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3">
+                    <a href="#section-pillars" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm transition shadow-md">Eksplorasi 7 Nilai</a>
+                    <a href="#section-calculator" class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-4 py-2 rounded-lg text-sm transition border border-slate-600">Simulasi Kinerja HR</a>
+                    <a href="#section-pnps" class="bg-slate-700 hover:bg-slate-600 text-white font-medium px-4 py-2 rounded-lg text-sm transition border border-slate-600">Kalkulator PNPS Mitra</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 1: 7 VALUES EXPLORER -->
+        <section id="section-pillars" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">1. Ikhtisar & Eksplorasi 7 Nilai Utama (The 7 Pillars)</h2>
+                <p class="text-sm text-slate-600">
+                    Bagian ini menyajikan arsitektur lengkap 7 Nilai Utama PT Cahaya Langit Cemerlang yang terbagi ke dalam tiga kelompok fungsional utama: Fondasi Karakter Internal, Kapabilitas Operasional, dan Sinergi Ekosistem. Pengguna dapat memfilter nilai berdasarkan kelompok, mengklik kartu nilai untuk membaca relevansi internal dan eksternal, serta melihat profil keseimbangan budaya pada grafik radar di bawah.
+                </p>
+            </div>
+
+            <!-- Cluster Filters -->
+            <div class="flex flex-wrap gap-2 items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider px-2">Filter Kelompok:</span>
+                <div class="flex flex-wrap gap-2" id="cluster-filter-buttons">
+                    <!-- Buttons generated by JS -->
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Value Cards Grid (8 cols) -->
+                <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4" id="values-card-grid">
+                    <!-- Cards populated via JS -->
+                </div>
+
+                <!-- Radar Chart & Detail Panel (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                            <h3 class="font-bold text-slate-800 text-base">Keseimbangan Kualitatif 7 Nilai</h3>
+                            <span class="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Model Keseimbangan</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Grafik radar di bawah menggambarkan profil ideal keseimbangan antara integritas internal, efisiensi operasional, dan pemberdayaan ekosistem.
+                        </p>
+                        <div class="chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Selected Card Detail View -->
+                    <div id="value-detail-box" class="bg-amber-50/70 border border-amber-200 p-5 rounded-2xl shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-amber-600 text-white font-bold text-xs px-2 py-0.5 rounded" id="detail-num">NILAI 01</span>
+                            <h4 class="font-bold text-slate-900 text-base" id="detail-title">Keteguhan Integritas</h4>
+                        </div>
+                        <p class="text-xs font-semibold text-amber-800 italic" id="detail-english">(Integrity First)</p>
+                        <p class="text-xs text-slate-700 leading-relaxed" id="detail-desc">Klik salah satu kartu nilai di samping untuk melihat perincian relevansi strategis internal dan eksternalnya.</p>
+                        <div class="grid grid-cols-1 gap-2 pt-2 text-xs">
+                            <div class="bg-white p-3 rounded-lg border border-amber-100">
+                                <span class="font-bold text-slate-800 block mb-1">Relevansi Internal:</span>
+                                <span class="text-slate-600" id="detail-internal">-</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-amber-100">
+                                <span class="font-bold text-slate-800 block mb-1">Relevansi Eksternal:</span>
+                                <span class="text-slate-600" id="detail-external">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 2: BARS EVALUATION FRAMEWORK -->
+        <section id="section-bars" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">2. Taksonomi Indikator Perilaku Utama (KBI) & BARS</h2>
+                <p class="text-sm text-slate-600">
+                    Modul ini memfasilitasi eksplorasi *Behaviorally Anchored Rating Scale* (BARS) skala 1 hingga 5 untuk setiap nilai luhur. BARS menerjemahkan konsep etika abstrak menjadi perilaku kerja nyata yang dapat diobservasi secara objektif, guna mengeliminasi bias evaluasi manajerial. Pilih nilai luhur dan geser slider tingkat perilaku untuk melihat jangkar indikator spesifik.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <!-- Value Selector Dropdown/Tabs -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <label for="bars-value-select" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Pilih Nilai Utama:</label>
+                        <select id="bars-value-select" class="bg-slate-50 border border-slate-300 font-medium text-slate-800 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
+                            <!-- Options populated via JS -->
+                        </select>
+                    </div>
+                    <div class="bg-slate-100 p-2 rounded-lg text-xs text-slate-600 max-w-md">
+                        <span class="font-bold text-slate-800">Prinsip BARS:</span> Mengukur tingkat kematangan perilaku dari Skala 1 (Sangat Buruk/Melanggar) hingga Skala 5 (Sangat Unggul/Role Model).
+                    </div>
+                </div>
+
+                <!-- Interactive BARS Slider Controls -->
+                <div class="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Tingkat Skala Perilaku (1 - 5):</span>
+                        <span id="bars-level-badge" class="bg-amber-500 text-slate-950 font-bold px-3 py-1 rounded-full text-xs">
+                            Skala 3: Memenuhi Ekspektasi
+                        </span>
+                    </div>
+
+                    <input id="bars-slider" type="range" min="1" max="5" step="1" value="3" class="w-full h-3 bg-slate-300 rounded-lg appearance-none cursor-pointer accent-amber-600">
+
+                    <div class="flex justify-between text-2xs font-semibold text-slate-500 px-1">
+                        <span>1 (Sangat Buruk)</span>
+                        <span>2 (Perlu Perbaikan)</span>
+                        <span>3 (Memenuhi Ekspektasi)</span>
+                        <span>4 (Melebihi Ekspektasi)</span>
+                        <span>5 (Role Model)</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic BARS Display Box -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+                    <div class="md:col-span-8 bg-amber-50/50 border border-amber-200 p-5 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-slate-900 text-sm" id="bars-display-title">Deskripsi Perilaku Terobservasi</h4>
+                            <span class="text-2xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded" id="bars-value-name-tag">Keteguhan Integritas</span>
+                        </div>
+                        <p class="text-sm text-slate-800 leading-relaxed font-medium" id="bars-behavior-text">
+                            -
+                        </p>
+                        <div class="pt-2 border-t border-amber-200/60 flex items-center justify-between text-xs text-slate-600">
+                            <span>Kategori Evaluasi: <strong id="bars-category-tag" class="text-slate-800">Standar Konsisten</strong></span>
+                            <span>Rekomendasi Tindakan HR: <strong id="bars-action-tag" class="text-amber-700">Pertahankan & Tingkatkan</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-4 bg-slate-800 text-white p-5 rounded-xl space-y-3">
+                        <h4 class="font-bold text-amber-400 text-xs uppercase tracking-wider">Indikator Perilaku Utama (KBI)</h4>
+                        <ul class="space-y-2 text-xs text-slate-300" id="bars-kbi-list">
+                            <!-- KBI list items populated via JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Full BARS Summary Matrix Table -->
+                <div class="space-y-3 pt-4 border-t border-slate-200">
+                    <h3 class="font-bold text-slate-900 text-sm">Matriks Ringkasan BARS 7 Nilai Utama (Skala 1, 3, 5)</h3>
+                    <div class="overflow-x-auto custom-scrollbar border border-slate-200 rounded-xl">
+                        <table class="w-full text-xs text-left text-slate-700">
+                            <thead class="text-2xs uppercase bg-slate-100 text-slate-700 border-b border-slate-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-bold w-1/4">Nilai Utama</th>
+                                    <th class="px-4 py-3 font-bold bg-red-50 text-red-800 w-1/4">Skala 1 (Sangat Buruk)</th>
+                                    <th class="px-4 py-3 font-bold bg-blue-50 text-blue-800 w-1/4">Skala 3 (Memenuhi Ekspektasi)</th>
+                                    <th class="px-4 py-3 font-bold bg-emerald-50 text-emerald-800 w-1/4">Skala 5 (Role Model)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bars-table-body" class="divide-y divide-slate-200">
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 3: BENCHMARK & INDUSTRY COMPARISON -->
+        <section id="section-benchmark" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">3. Komparasi Praktik Terbaik Korporasi & Benchmark Industri</h2>
+                <p class="text-sm text-slate-600">
+                    Bagian ini membandingkan kerangka budaya PT Cahaya Langit Cemerlang dengan dua konglomerasi terkemuka di Indonesia: Sinar Mas Group dan PT Astra International Tbk. Analisis komparatif menunjukkan bagaimana PT Cahaya Langit CemerLANG memadukan integritas individu dan kepemimpinan sistemik, serta memperluas cakupannya melalui penambahan pilar khusus kemitraan ekosistem (Nilai 07).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Comparison Table (7 cols) -->
+                <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base">Matriks Perbandingan Kerangka Budaya</h3>
+                    <div class="overflow-x-auto custom-scrollbar border border-slate-200 rounded-xl">
+                        <table class="w-full text-xs text-left text-slate-700">
+                            <thead class="bg-slate-900 text-white uppercase text-2xs">
+                                <tr>
+                                    <th class="px-3 py-3">Parameter</th>
+                                    <th class="px-3 py-3 text-amber-400 bg-slate-800">PT Cahaya Langit Cemerlang</th>
+                                    <th class="px-3 py-3">Sinar Mas Group</th>
+                                    <th class="px-3 py-3">PT Astra International Tbk</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200">
+                                <tr class="bg-white">
+                                    <td class="px-3 py-3 font-bold text-slate-900">Jumlah & Fokus Nilai</td>
+                                    <td class="px-3 py-3 font-semibold text-slate-900 bg-amber-50/50"><strong>7 Nilai Utama</strong><br>Keseimbangan karakter internal & ekosistem eksternal.</td>
+                                    <td class="px-3 py-3"><strong>6 Core Values</strong><br>Integritas individu, kerja keras, & perbaikan terus-menerus.</td>
+                                    <td class="px-3 py-3"><strong>Catur Dharma</strong><br>Kontribusi nasional, pelayanan pelanggan, & keunggulan.</td>
+                                </tr>
+                                <tr class="bg-slate-50/50">
+                                    <td class="px-3 py-3 font-bold text-slate-900">Pilar Ekosistem & Mitra</td>
+                                    <td class="px-3 py-3 font-semibold text-slate-900 bg-amber-50/50"><strong>Ditegaskan Eksplisit (Nilai 07)</strong><br>Pemberdayaan mitra jujur sebagai strategi inti.</td>
+                                    <td class="px-3 py-3">Dijalankan melalui etika bisnis umum & program CSR eksternal.</td>
+                                    <td class="px-3 py-3">Diinternalisasi melalui filosofi pelayanan & prinsip ESG.</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-3 py-3 font-bold text-slate-900">Sistem Eksekusi</td>
+                                    <td class="px-3 py-3 font-semibold text-slate-900 bg-amber-50/50">Instrumen BARS, Dual-Track OKR/BARS, audit kualitatif.</td>
+                                    <td class="px-3 py-3">Warisan pendiri (*founding wisdom*) & sinergi pilar bisnis.</td>
+                                    <td class="px-3 py-3">Kode etik ketat *Astra Code of Conduct* & Management System.</td>
+                                </tr>
+                                <tr class="bg-slate-50/50">
+                                    <td class="px-3 py-3 font-bold text-slate-900">Diferensiasi Strategis</td>
+                                    <td class="px-3 py-3 font-semibold text-slate-900 bg-amber-50/50">Keunggulan bersaing berbasis ekosistem (*ecosystem advantage*).</td>
+                                    <td class="px-3 py-3">Keutamaan integritas & *put statements into action*.</td>
+                                    <td class="px-3 py-3">Menjadi perusahaan yang bermanfaat bagi bangsa & negara.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Comparison Chart & Strategic Positioning (5 cols) -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="font-bold text-slate-900 text-base">Penekanan Orientasi Budaya</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Grafik batang berikut menggambarkan estimasi bobot penekanan relatif kerangka budaya antar perusahaan pada empat dimensi utama.
+                        </p>
+                        <div class="chart-container">
+                            <canvas id="benchmarkChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-sm space-y-3 border border-slate-800">
+                        <div class="flex items-center space-x-2 text-amber-400">
+                            <span class="text-base">💡</span>
+                            <h4 class="font-bold text-sm uppercase tracking-wider">Kesimpulan Diferensiasi</h4>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Jika konglomerasi tradisional menempatkan mitra eksternal sebatas pada aspek legalitas atau CSR, PT Cahaya Langit Cemerlang menjadikan pemberdayaan mitra berintegritas sebagai **pilar inti budaya**. Hal ini menciptakan jaringan rantai pasok yang loyal dan resilient terhadap ketidakpastian pasar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 4: CULTURAL BARRIERS & DIAGNOSTIC -->
+        <section id="section-barriers" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">4. Diagnosis Hambatan Budaya & Strategi Mitigasi Terstruktur</h2>
+                <p class="text-sm text-slate-600">
+                    Proses internalisasi nilai sering terhalang oleh hambatan struktural maupun perilaku. Modul ini menyajikan empat hambatan utama beserta akar masalah, dampak tingkat dua (*ripple effects*), dan strategi mitigasinya. Anda juga dapat menggunakan **Alat Diagnosis Mandiri Risk Check** untuk mengidentifikasi gejala hambatan di unit kerja Anda.
+                </p>
+            </div>
+
+            <!-- Interactive Diagnostic Tool -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-100 pb-4 gap-2">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Alat Diagnosis Mandiri Risiko Budaya Unit Kerja</h3>
+                        <p class="text-xs text-slate-500">Beri tanda centang pada gejala yang teramati di lingkungan kerja Anda untuk mendapatkan rekomendasi mitigasi.</p>
+                    </div>
+                    <button id="reset-diagnostic-btn" class="text-2xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded font-semibold transition">
+                        Reset Diagnosis
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="diagnostic-checklist">
+                    <!-- Checkbox items populated via JS -->
+                </div>
+
+                <div id="diagnostic-result" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-xl space-y-2">
+                    <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider text-amber-800">Rekomendasi Strategi Mitigasi Terfokus:</h4>
+                    <ul class="list-disc list-inside text-xs text-slate-800 space-y-1" id="diagnostic-recommendations">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Barrier Matrix Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="barriers-cards-container">
+                <!-- Barrier cards populated via JS -->
+            </div>
+        </section>
+
+
+        <!-- MODULE 5: HR LIFECYCLE & DUAL-TRACK CALCULATOR -->
+        <section id="section-calculator" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">5. Integrasi Siklus Human Capital & Kalkulator Kinerja Dual-Track</h2>
+                <p class="text-sm text-slate-600">
+                    Nilai-nilai luhur diintegrasikan ke seluruh siklus hidup Human Capital (*End-to-End Employee Lifecycle*). Modul ini menyediakan **Kalkulator Kinerja Dual-Track** yang menggabungkan pencapaian target bisnis (OKR) dengan penegakan nilai luhur (BARS) sesuai formulasi evaluasi resmi korporasi, serta memetakan karyawan ke dalam Matriks 9-Box Talent Management.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Dual-Track Calculator Controls (6 cols) -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-3">
+                        <h3 class="font-bold text-slate-900 text-base">Kalkulator Kinerja Dual-Track (OKR + BARS)</h3>
+                        <p class="text-xs text-slate-500">Formula: Skor Total = (OKR % × Bobot OKR) + (Skor BARS Konversi % × Bobot BARS)</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label for="calc-emp-name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nama Karyawan / Posisi:</label>
+                            <input type="text" id="calc-emp-name" value="Budi Santoso (Senior Specialist)" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm rounded-lg block w-full p-2.5 font-medium">
+                        </div>
+
+                        <!-- OKR Slider -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span class="text-slate-700">Pencapaian Target OKR Bisnis (%):</span>
+                                <span id="okr-val-text" class="text-blue-700 font-extrabold">90%</span>
+                            </div>
+                            <input id="okr-slider" type="range" min="0" max="120" step="5" value="90" class="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                            <div class="flex justify-between text-2xs text-slate-400">
+                                <span>0% (Sangat Rendah)</span>
+                                <span>100% (Sesuai Target)</span>
+                                <span>120% (Melampaui)</span>
+                            </div>
+                        </div>
+
+                        <!-- BARS Level Slider -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-bold">
+                                <span class="text-slate-700">Rata-rata Penilaian BARS Nilai (1 - 5):</span>
+                                <span id="bars-val-text" class="text-amber-700 font-extrabold">Skala 4.0 (Melebihi)</span>
+                            </div>
+                            <input id="bars-calc-slider" type="range" min="1" max="5" step="0.1" value="4.0" class="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-600">
+                            <div class="flex justify-between text-2xs text-slate-400">
+                                <span>1.0 (Buruk)</span>
+                                <span>3.0 (Memenuhi)</span>
+                                <span>5.0 (Role Model)</span>
+                            </div>
+                        </div>
+
+                        <!-- Weight Settings Accordion -->
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <span>Pengaturan Bobot Penilaian HR:</span>
+                                <span id="weight-label" class="text-slate-900">OKR: 60% | BARS: 40%</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="weight-preset-btn text-2xs bg-amber-500 text-slate-950 font-bold px-2 py-1 rounded shadow-xs" data-okr="60" data-bars="40">Standar (60/40)</button>
+                                <button class="weight-preset-btn text-2xs bg-slate-200 text-slate-700 font-medium px-2 py-1 rounded" data-okr="50" data-bars="50">Seimbang (50/50)</button>
+                                <button class="weight-preset-btn text-2xs bg-slate-200 text-slate-700 font-medium px-2 py-1 rounded" data-okr="70" data-bars="30">Hasil Operasional (70/30)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Output & 9-Box Placement (6 cols) -->
+                <div class="lg:col-span-6 bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 shadow-xl space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-amber-400 text-base">Hasil Evaluasi & Kategori Talent</h3>
+                        <span class="text-2xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30">Dual-Track Result</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-2xs font-bold text-slate-400 uppercase">Skor Kinerja Total</span>
+                            <div class="text-3xl font-black text-amber-400" id="total-score-display">86.0%</div>
+                            <span class="text-2xs text-slate-300 block" id="score-breakdown-text">(OKR 54% + BARS 32%)</span>
+                        </div>
+
+                        <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-1">
+                            <span class="text-2xs font-bold text-slate-400 uppercase">Kategori Kinerja</span>
+                            <div class="text-lg font-bold text-white leading-tight" id="score-category-display">Sangat Baik (Exceeds)</div>
+                            <span class="text-2xs text-emerald-400 block font-semibold" id="bonus-eligibility-display">✓ Berhak Bonus Penuh & Promosi</span>
+                        </div>
+                    </div>
+
+                    <!-- 9-Box Matrix Position Card -->
+                    <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase text-amber-400 tracking-wider">Posisi Matriks 9-Box Talent:</span>
+                            <span class="text-2xs font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded" id="ninebox-quadrant-tag">Star Player / Model</span>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="ninebox-desc-text">
+                            Karyawan menunjukkan hasil pencapaian bisnis yang tinggi serta selaras secara konsisten dengan nilai luhur korporasi. Prioritas utama untuk suksesi kepemimpinan.
+                        </p>
+                    </div>
+
+                    <div class="p-3 bg-red-950/40 border border-red-800/50 rounded-lg text-2xs text-red-200 space-y-1" id="toxic-high-performer-warning">
+                        <strong class="text-red-400 block">⚠️ Catatan Kebijakan Etika:</strong>
+                        <span>Pencapaian target OKR tinggi (>100%) dengan skor BARS rendah (&lt;2.5) dikategorikan sebagai <em>Toxic High-Performer</em>. Sesuai pedoman, individu tidak berhak atas bonus penuh dan wajib mengikuti konseling nilai.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E2E Lifecycle Flow Visual -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="font-bold text-slate-900 text-base">Tahapan Integrasi Budaya dalam Siklus Hidup Talent</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="lifecycle-cards">
+                    <!-- Lifecycle cards populated via JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 6: METROLOGY & PNPS SIMULATOR -->
+        <section id="section-pnps" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">6. Metrologi Budaya & Simulator Partner Net Promoter Score (PNPS)</h2>
+                <p class="text-sm text-slate-600">
+                    Keberhasilan implementasi nilai luhur diukur menggunakan metrik kuantitatif teruji. Dimensi internal diukur dengan *McKinsey Organizational Health Index* (OHI) dan tingkat pelanggaran integritas. Dimensi ekosistem diukur dengan **Partner Net Promoter Score (PNPS)** untuk Nilai 07. Gunakan simulator di bawah untuk menghitung PNPS dari survei mitra bisnis.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- PNPS Interactive Simulator (6 cols) -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-3 flex justify-between items-center">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">Simulator Partner NPS (Nilai 07)</h3>
+                            <p class="text-xs text-slate-500">Rumus: PNPS = % Promoters (Skor 9-10) - % Detractors (Skor 0-6)</p>
+                        </div>
+                        <span class="text-2xs bg-amber-100 text-amber-800 font-bold px-2 py-1 rounded">Target: ≥ +50</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-1">
+                                <label class="block text-2xs font-bold text-emerald-800 uppercase">Promoters (9-10)</label>
+                                <input type="number" id="pnps-promoters" value="70" min="0" class="bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-bold rounded-lg block w-full p-2.5">
+                                <span class="text-2xs text-slate-400 block">Mitra Puas & Setia</span>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-2xs font-bold text-slate-600 uppercase">Passives (7-8)</label>
+                                <input type="number" id="pnps-passives" value="20" min="0" class="bg-slate-50 border border-slate-300 text-slate-800 text-sm font-bold rounded-lg block w-full p-2.5">
+                                <span class="text-2xs text-slate-400 block">Mitra Netral</span>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-2xs font-bold text-red-800 uppercase">Detractors (0-6)</label>
+                                <input type="number" id="pnps-detractors" value="10" min="0" class="bg-red-50 border border-red-300 text-red-900 text-sm font-bold rounded-lg block w-full p-2.5">
+                                <span class="text-2xs text-slate-400 block">Mitra Kecewa</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs font-bold text-slate-500 uppercase block">Skor Hasil PNPS:</span>
+                                <div class="text-3xl font-black text-amber-600" id="pnps-score-result">+60</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-slate-800 block" id="pnps-status-tag">Status: Kinerja Sangat Baik</span>
+                                <span class="text-2xs text-slate-500 block" id="pnps-target-status">✓ Memenuhi Target Strategis Korporasi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Internal Metrology & Chart (6 cols) -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base">Matriks Metrologi Budaya & Target KPI Korporasi</h3>
+                    <p class="text-xs text-slate-600">
+                        Evaluasi kuantitatif berkala menjamin bahwa internalisasi budaya membuahkan hasil nyata pada kinerja internal dan eksternal.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="metrologyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- MODULE 7: EXECUTIVE RECOMMENDATIONS & ROADMAP -->
+        <section id="section-roadmap" class="scroll-mt-20 space-y-6">
+            <div class="border-l-4 border-amber-500 pl-4 space-y-1">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900">7. Rekomendasi Strategis Eksekutif & Peta Jalan Implementasi</h2>
+                <p class="text-sm text-slate-600">
+                    Berdasarkan temuan evaluasi, lima rekomendasi utama disusun untuk tingkatan pimpinan eksekutif PT Cahaya Langit Cemerlang guna menjamin keberlanjutan budaya organisasi. Gunakan daftar tindakan di bawah untuk memantau kemajuan implementasi.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                <div class="space-y-4" id="recommendations-container">
+                    <!-- Recommendations populated via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 text-center md:text-left md:flex md:justify-between md:items-center">
+            <div>
+                <p class="font-bold text-white text-sm">PT CAHAYA LANGIT CEMERLANG © 2026</p>
+                <p class="text-slate-500 mt-0.5">Dokumen Pedoman Budaya, Integritas & Riset Strategis Korporasi</p>
+            </div>
+            <div class="text-slate-500 text-2xs space-y-1">
+                <p>Landasan Moral: Integrity First, Relentless Excellence, & Empowering Strategic Partnership</p>
+                <p>Sistem Single-Page Application Interaktif</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA STRUCTURES FROM SOURCE REPORT
+
+        const valuesData = [
+            {
+                id: 1,
+                num: "Nilai 01",
+                title: "Keteguhan Integritas",
+                english: "Integrity First",
+                cluster: "Fondasi Karakter",
+                desc: "Menjaga standar etika tertinggi, bertindak jujur, transparan, serta konsisten antara ucapan dan tindakan dalam segala kondisi.",
+                internal: "Memangkas biaya transaksi administratif akibat sistem pengawasan berlebih (over-monitoring) dan menjamin kepatuhan kode etik.",
+                external: "Memperkuat kredibilitas korporasi di mata pasar, konsumen, mitra, dan regulator.",
+                kbi: [
+                    "Menyampaikan laporan kerja secara jujur dan akurat tanpa manipulasi data.",
+                    "Mengakui kesalahan operasional secara terbuka dan segera melakukan tindakan korektif.",
+                    "Konsisten mematuhi kode etik bisnis dalam kondisi tertekan maupun tanpa pengawasan."
+                ],
+                bars: {
+                    1: "Menyembunyikan kesalahan kerja, memanipulasi data pelaporan, atau melanggar kode etik demi keuntungan pribadi.",
+                    2: "Jujur hanya jika diawasi secara ketat; cenderung ragu melaporkan potensi risiko etika.",
+                    3: "Menyampaikan data pekerjaan secara akurat, mengakui kesalahan operasional secara terbuka, dan mematuhi regulasi.",
+                    4: "Proaktif mengingatkan rekan kerja terkait kepatuhan etika dan transparansi pelaporan.",
+                    5: "Menjadi teladan etika korporasi, secara aktif mengoreksi pelanggaran integritas, dan membangun sistem transparansi baru."
+                }
+            },
+            {
+                id: 2,
+                num: "Nilai 02",
+                title: "Optimisme Konstruktif",
+                english: "Positive Mindset",
+                cluster: "Fondasi Karakter",
+                desc: "Memiliki pandangan positif dan antusias dalam menghadapi tantangan, serta mengubah setiap kendala menjadi peluang pertumbuhan.",
+                internal: "Membentuk ketahanan psikologis (psychological capital) tim yang mencegah kejenuhan kerja dan mendorong respons adaptif.",
+                external: "Menampilkan citra perusahaan yang solutif, tangguh, dan dapat diandalkan oleh klien dalam situasi krisis.",
+                kbi: [
+                    "Menghadapi perubahan operasional dengan antusiasme dan pikiran terbuka.",
+                    "Fokus pada pencarian solusi konkret daripada mengeluhkan hambatan.",
+                    "Menyebarkan energi positif dan optimisme dalam diskusi tim."
+                ],
+                bars: {
+                    1: "Menolak perubahan, mengeluhkan hambatan secara berlebihan tanpa solusi, dan menyebarkan negativitas.",
+                    2: "Memiliki kebiasaan ragu-ragu saat menghadapi kendala baru dan membutuhkan dorongan terus-menerus.",
+                    3: "Menghadapi tantangan kerja dengan tenang, mencari sudut pandang positif, dan fokus pada penyelesaian masalah.",
+                    4: "Secara aktif membantu rekan kerja keluar dari tekanan krisis dan menawarkan opsi pemecahan masalah.",
+                    5: "Mampu membakar semangat tim di tengah krisis besar, mengubah kegagalan menjadi materi pembelajaran, dan menemukan peluang baru."
+                }
+            },
+            {
+                id: 3,
+                num: "Nilai 03",
+                title: "Tanggung Jawab Penuh",
+                english: "Total Commitment",
+                cluster: "Fondasi Karakter",
+                desc: "Memegang teguh kepercayaan dengan dedikasi tinggi, menyelesaikan tugas hingga tuntas, dan tepat janji terhadap setiap kesepakatan.",
+                internal: "Menciptakan budaya akuntabilitas tanpa rasa takut (accountability culture) di mana tugas diselesaikan tuntas.",
+                external: "Menjamin kepastian deliverables, kualitas hasil, dan ketepatan janji bisnis kepada mitra eksternal.",
+                kbi: [
+                    "Menyelesaikan seluruh porsi pekerjaan sesuai tenggat waktu yang disepakati.",
+                    "Mengambil kepemilikan penuh (ownership) atas hasil kerja pribadi maupun tim.",
+                    "Memenuhi janji bisnis kepada mitra dan pelanggan tanpa kompromi."
+                ],
+                bars: {
+                    1: "Memindahkan kesalahan kepada pihak lain (blame-shifting), membiarkan tugas terbengkalai, dan melanggar tenggat waktu.",
+                    2: "Menyelesaikan tugas hanya jika diperingatkan berulang kali; hasil kerja sering kali kurang tuntas.",
+                    3: "Menyelesaikan seluruh tugas yang ditargetkan sesuai standar mutu dan mematuhi janji yang telah disepakati.",
+                    4: "Mengambil inisiatif tambahan untuk memastikan deliverables selesai lebih awal dengan kualitas tinggi.",
+                    5: "Mengambil akuntabilitas penuh atas proyek berisiko tinggi, memastikan solusi cadangan, dan mengeksekusi hasil melebihi ekspektasi."
+                }
+            },
+            {
+                id: 4,
+                num: "Nilai 04",
+                title: "Pengembangan Tiada Henti",
+                english: "Relentless Excellence",
+                cluster: "Kapabilitas Operasional",
+                desc: "Berkomitmen untuk terus belajar, mengevaluasi, dan meningkatkan kualitas performa maupun proses kerja secara berkelanjutan.",
+                internal: "Mengamankan posisi korporasi dari ancaman komplasensi melalui penerapan metrik evaluasi diri yang ketat.",
+                external: "Menjamin peningkatan mutu produk dan efisiensi layanan secara berkesinambungan bagi pasar.",
+                kbi: [
+                    "Secara rutin melakukan evaluasi mandiri pasca-penyelesaian proyek.",
+                    "Aktif mempelajari keterampilan atau teknologi baru yang relevan dengan pekerjaan.",
+                    "Menerima umpan balik konstruktif dengan sikap terbuka demi perbaikan."
+                ],
+                bars: {
+                    1: "Menolak umpan balik konstruktif, merasa puas dengan cara kerja lama, dan enggan belajar hal baru.",
+                    2: "Mengikuti pelatihan hanya karena kewajiban formal HR; jarang mengaplikasikan ilmu baru.",
+                    3: "Secara rutin mengevaluasi hasil kerja pribadi, mengikuti pelatihan, dan menerapkan perbaikan pada metode kerja.",
+                    4: "Scara aktif membagikan ilmu baru (knowledge sharing) dan memprakarsai perbaikan proses kerja tim.",
+                    5: "Menciptakan standar kinerja baru bagi unit kerja, merancang kurikulum pembelajaran, dan membimbing rekan lain secara konsisten."
+                }
+            },
+            {
+                id: 5,
+                num: "Nilai 05",
+                title: "Kreativitas Solutif",
+                english: "Innovative Drive",
+                cluster: "Kapabilitas Operasional",
+                desc: "Berpikir terbuka dan adaptif dalam melahirkan gagasan-gagasan baru yang bernilai tambah guna menjawab kebutuhan masa depan.",
+                internal: "Mendorong efisiensi proses kerja internal melalui simplifikasi dan pemikiran adaptif.",
+                external: "Menyediakan solusi bernilai tambah unik guna menjawab kebutuhan masa depan pelanggan dan industri.",
+                kbi: [
+                    "Mengusulkan gagasan perbaikan cara kerja yang lebih efisien.",
+                    "Terbuka terhadap penggunaan teknologi baru dalam penyelesaian tugas.",
+                    "Mampu memecahkan kebuntuan operasional dengan pendekatan tidak konvensional."
+                ],
+                bars: {
+                    1: "Menghindari gagasan baru, kaku dalam prosedur usang yang tidak efisien, dan menolak digitalisasi.",
+                    2: "Menerima inovasi hanya jika dicontohkan orang lain; cenderung pasif dalam memberikan usulan.",
+                    3: "Mengusulkan perbaikan cara kerja yang lebih efisien dan mengimplementasikan ide kreatif dalam skala operasional harian.",
+                    4: "Mengembangkan solusi kreatif yang berhasil menghemat biaya atau mempercepat waktu proses unit kerja.",
+                    5: "Menerobos kebuntuan operasional dengan inovasi disruptif yang menghemat biaya atau meningkatkan pendapatan secara signifikan."
+                }
+            },
+            {
+                id: 6,
+                num: "Nilai 06",
+                title: "Dedikasi & Loyalitas",
+                english: "True Loyalty",
+                cluster: "Sinergi Ekosistem",
+                desc: "Setia pada visi bersama, saling menjaga reputasi organisasi, dan mengutamakan kepentingan tim serta keberlanjutan perusahaan.",
+                internal: "Menyelaraskan tujuan individu dengan visi korporasi dan meminimalkan konflik kepentingan internal.",
+                external: "Mengamankan reputasi, nama baik, dan kerahasiaan aset strategis perusahaan di ruang publik.",
+                kbi: [
+                    "Menjaga nama baik dan reputasi perusahaan di dalam maupun di luar lingkungan kerja.",
+                    "Mengutamakan kepentingan sasaran tim dan perusahaan di atas agenda pribadi.",
+                    "Setia dan gigih mendukung perusahaan dalam melewati masa-masa krisis."
+                ],
+                bars: {
+                    1: "Mengutamakan kepentingan pribadi di atas tim, mendiskreditkan organisasi di ruang publik, atau membocorkan rahasia internal.",
+                    2: "Loyal hanya saat kondisi perusahaan stabil; cenderung pasif saat perusahaan menghadapi tantangan berat.",
+                    3: "Menjaga nama baik perusahaan, menyelaraskan prioritas harian dengan sasaran tim, dan setia pada visi organisasi.",
+                    4: "Aktif membela reputasi korporasi dari disinformasi dan mempromosikan citra positif perusahaan.",
+                    5: "Mengorbankan kenyamanan pribadi demi kepentingan penyelamatan organisasi dalam krisis serta menjadi benteng reputasi korporasi."
+                }
+            },
+            {
+                id: 7,
+                num: "Nilai 07",
+                title: "Kemitraan Tulus & Saling Memberdayakan",
+                english: "Empowering Strategic Partnership",
+                cluster: "Sinergi Ekosistem",
+                desc: "Membangun hubungan kolaborasi jangka panjang yang berlandaskan ketulusan dan kredibilitas. Perusahaan secara aktif mendukung, menghargai, serta memberdayakan mitra bisnis yang terbukti jujur dan berintegritas tinggi demi tumbuh dan sukses bersama.",
+                internal: "Mengubah orientasi bisnis dari transaksi jangka pendek (zero-sum) menjadi kolaborasi ekosistem yang berkelanjutan.",
+                external: "Membangun jejaring pasokan dan aliansi strategis yang tangguh, jujur, kredibel, dan berintegritas tinggi.",
+                kbi: [
+                    "Memperlakukan mitra bisnis dan vendor secara adil, transparan, dan penuh ketulusan.",
+                    "Memberikan dukungan dan pendampingan bagi mitra berintegritas yang mengalami kesulitan.",
+                    "Menciptakan kesepakatan bisnis yang saling menguntungkan (win-win) untuk jangka panjang."
+                ],
+                bars: {
+                    1: "Memanfaatkan kelemahan mitra untuk keuntungan sepihak, bersikap menekan, dan mengabaikan kredibilitas vendor.",
+                    2: "Memperlakukan mitra sebatas transaksi jangka pendek; ragu memberikan bantuan saat mitra menghadapi kendala.",
+                    3: "Memperlakukan mitra bisnis secara adil, menghormati perjanjian kerja sama, dan memberikan dukungan standar saat mitra kesulitan.",
+                    4: "Inisiatif merancang program pembinaan kapabilitas bagi mitra lokal yang terbukti jujur dan berdedikasi.",
+                    5: "Secara aktif merancang ekosistem pemberdayaan mitra strategis, menciptakan aliansi bisnis kokoh, dan memfasilitasi kemajuan mitra."
+                }
+            }
+        ];
+
+        const diagnosticSymptoms = [
+            { id: 'sym1', text: 'Target finansial sangat dikejar, namun kepatuhan etika dan transparansi pelaporan sering diabaikan.', barrierId: 1 },
+            { id: 'sym2', text: 'Karyawan menganggap pesan budaya hanya slogan promosi pimpinan tanpa contoh nyata.', barrierId: 2 },
+            { id: 'sym3', text: 'Bonus/insentif diberikan murni berdasarkan hasil penjualan/profit tanpa melihat cara kerjanya.', barrierId: 3 },
+            { id: 'sym4', text: 'Mitra kerja/vendor mengeluhkan perlakuan sepihak atau proses negosiasi yang menekan.', barrierId: 4 },
+            { id: 'sym5', text: 'Manajer menengah menahan usulan perbaikan dari staf operasional karena takut mengganggu target harian.', barrierId: 1 },
+            { id: 'sym6', text: 'Karyawan berkinerja tinggi yang berperilaku toksik tetap dipromosikan oleh manajemen.', barrierId: 3 }
+        ];
+
+        const barriersData = [
+            {
+                id: 1,
+                title: "Middle Management Bottleneck",
+                category: "Sistemik / Manajerial",
+                rootCause: "Tekanan target finansial jangka pendek mengesampingkan evaluasi berbasis nilai.",
+                rippleEffect: "Permafrost effect: Pesan nilai luhur terhenti di tingkat eksekutif dan tidak sampai ke staf operasional.",
+                mitigation: "Memasukkan bobot KBI/BARS sebesar 40% ke dalam KPI manajer serta menerapkan evaluasi 360 derajat."
+            },
+            {
+                id: 2,
+                title: "Sinisme Organisasi & Formalitas",
+                category: "Kultural / Perilaku",
+                rootCause: "Ketidakselarasan antara ucapan eksekutif dengan keputusan operasional nyata di lapangan.",
+                rippleEffect: "Timbulnya sinisme masif dan kepatuhan formalitas (performative compliance) di kalangan staf.",
+                mitigation: "Penerapan zero-tolerance policy bagi pelanggaran etika dan audit kepemimpinan secara transparan."
+            },
+            {
+                id: 3,
+                title: "Incentive Disconnect",
+                category: "Operasional / HR",
+                rootCause: "Sistem kompensasi finansial hanya mengapresiasi output tanpa memperhitungkan cara pencapaiannya.",
+                rippleEffect: "Karyawan berkinerja tinggi tetapi berperilaku toksik (toxic high-performer) tetap dipromosikan.",
+                mitigation: "Implementasi Dual-Track Performance Appraisal (OKR 60% + BARS 40%) dengan syarat ambang BARS."
+            },
+            {
+                id: 4,
+                title: "Vendor & Partner Distrust",
+                category: "Eksternal / Ekosistem",
+                rootCause: "Mitra mencurigai komitmen Nilai 07 sekadar wacana pemasaran untuk menekan harga vendor.",
+                rippleEffect: "Mitra berintegritas tinggi enggan memberikan penawaran terbaik atau memutus hubungan kerja.",
+                mitigation: "Publikasi Charter Kemitraan Berintegritas dan penerapan survei tahunan Partner NPS secara independen."
+            }
+        ];
+
+        const lifecycleStages = [
+            {
+                title: "1. Rekrutmen & Seleksi",
+                subtitle: "Values-Based Recruitment",
+                desc: "Seleksi berfokus pada value fit menggunakan Behavioral Event Interview (BEI) dan Situational Judgment Tests (SJT) untuk mendeteksi integritas dan adaptabilitas.",
+                badge: "Tahap 1"
+            },
+            {
+                title: "2. Onboarding & Pembelajaran",
+                subtitle: "Continuous Learning",
+                desc: "Studi kasus nyata korporasi mengenai dilema etika dan simulasi pemberdayaan mitra (Nilai 07) dimasukkan ke dalam kurikulum karyawan baru & kepemimpinan.",
+                badge: "Tahap 2"
+            },
+            {
+                title: "3. Manajemen Kinerja",
+                subtitle: "Dual-Track Assessment",
+                desc: "Penggabungan pencapaian hasil bisnis (OKR 60%) dan evaluasi perilaku BARS (40%) dalam formulasi penilaian tahunan terpadu.",
+                badge: "Tahap 3"
+            },
+            {
+                title: "4. Karir & Talent Matrix",
+                subtitle: "9-Box Talent Placement",
+                desc: "Matriks 9-Box menolak penempatan Star Player bagi karyawan ber-OKR tinggi namun ber-skor BARS rendah. Disertai penganugerahan Culture Awards.",
+                badge: "Tahap 4"
+            }
+        ];
+
+        const recommendationsData = [
+            {
+                num: "REC-01",
+                title: "Pengesahan Instrumen BARS secara Resmi Korporasi",
+                desc: "Menerbitkan panduan teknis BARS untuk seluruh level jabatan sebagai standar baku evaluasi kinerja tahunan guna mengeliminasi bias subjektivitas.",
+                timeline: "Triwulan I (Q1)",
+                status: "Prioritas Tinggi"
+            },
+            {
+                num: "REC-02",
+                title: "Penerapan Matriks Dual-Track OKR/BARS pada Kompensasi",
+                desc: "Mengintegrasikan pemenuhan BARS (bobot 40%) dan pencapaian OKR (bobot 60%) dalam penetapan bonus, insentif, dan promosi karir karyawan.",
+                timeline: "Triwulan II (Q2)",
+                status: "Prioritas Tinggi"
+            },
+            {
+                num: "REC-03",
+                title: "Pembentukan Komite Budaya & Culture Champions",
+                desc: "Mengangkat Culture Champions di setiap unit kerja yang bertugas mengawasi penerapan KBI harian, memfasilitasi pelatihan, dan mengelola saluran integritas.",
+                timeline: "Triwulan II (Q2)",
+                status: "Sedang Berjalan"
+            },
+            {
+                num: "REC-04",
+                title: "Institusionalisasi Pengukuran PNPS Eksternal Independen",
+                desc: "Meluncurkan survei Partner Net Promoter Score (PNPS) tahunan yang dikelola oleh lembaga independen untuk mengukur persepsi vendor terhadap Nilai 07.",
+                timeline: "Triwulan III (Q3)",
+                status: "Direncanakan"
+            },
+            {
+                num: "REC-05",
+                title: "Penyelarasan Siklus Hidup Human Capital",
+                desc: "Memperbarui seluruh instrumen rekrutmen, orientasi, pelatihan kepemimpinan, dan manajemen talenta agar sejalan dengan indikator 7 Nilai Utama.",
+                timeline: "Triwulan IV (Q4)",
+                status: "Direncanakan"
+            }
+        ];
+
+
+        // STATE VARIABLES
+        let selectedCluster = "Semua";
+        let currentSelectedValueId = 1;
+        let radarChartInstance = null;
+        let benchmarkChartInstance = null;
+        let metrologyChartInstance = null;
+        let currentWeightOKR = 0.60;
+        let currentWeightBARS = 0.40;
+
+
+        // INITIALIZATION LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNavigation();
+            renderClusterFilters();
+            renderValuesCards();
+            updateDetailView(1);
+            initRadarChart();
+            
+            populateBARSSelect();
+            updateBARSDisplay();
+            renderBARSTable();
+
+            initBenchmarkChart();
+            renderDiagnosticChecklist();
+            renderBarriersCards();
+
+            setupCalculatorListeners();
+            calculateDualTrackScore();
+            renderLifecycleCards();
+
+            setupPNPSListeners();
+            calculatePNPS();
+            initMetrologyChart();
+
+            renderRecommendations();
+
+            setupMobileMenu();
+        });
+
+
+        // NAVIGATION RENDERER
+        function renderNavigation() {
+            const navItems = [
+                { id: "section-pillars", label: "7 Nilai Utama" },
+                { id: "section-bars", label: "Matriks BARS" },
+                { id: "section-benchmark", label: "Benchmark" },
+                { id: "section-barriers", label: "Mitigasi Risiko" },
+                { id: "section-calculator", label: "Kalkulator HR" },
+                { id: "section-pnps", label: "Metrologi & PNPS" },
+                { id: "section-roadmap", label: "Rekomendasi" }
+            ];
+
+            const desktopContainer = document.getElementById('desktop-nav');
+            const mobileContainer = document.getElementById('mobile-menu');
+
+            desktopContainer.innerHTML = navItems.map(item => `
+                <a href="#${item.id}" class="px-3 py-2 rounded-md hover:bg-slate-800 hover:text-amber-400 transition text-slate-300">
+                    ${item.label}
+                </a>
+            `).join('');
+
+            mobileContainer.innerHTML = navItems.map(item => `
+                <a href="#${item.id}" class="block px-3 py-2 rounded-md hover:bg-slate-700 hover:text-amber-400 text-slate-200">
+                    ${item.label}
+                </a>
+            `).join('');
+        }
+
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+            menu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => menu.classList.add('hidden'));
+            });
+        }
+
+
+        // MODULE 1: VALUES EXPLORER LOGIC
+        function renderClusterFilters() {
+            const clusters = ["Semua", "Fondasi Karakter", "Kapabilitas Operasional", "Sinergi Ekosistem"];
+            const container = document.getElementById('cluster-filter-buttons');
+
+            container.innerHTML = clusters.map(c => `
+                <button class="cluster-btn text-xs font-semibold px-3 py-1.5 rounded-lg border transition ${c === selectedCluster ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-xs' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'}" data-cluster="${c}">
+                    ${c}
+                </button>
+            `).join('');
+
+            container.querySelectorAll('.cluster-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    selectedCluster = e.target.getAttribute('data-cluster');
+                    renderClusterFilters();
+                    renderValuesCards();
+                });
+            });
+        }
+
+        function renderValuesCards() {
+            const grid = document.getElementById('values-card-grid');
+            const filtered = selectedCluster === "Semua" 
+                ? valuesData 
+                : valuesData.filter(v => v.cluster === selectedCluster);
+
+            grid.innerHTML = filtered.map(v => `
+                <div class="value-card cursor-pointer bg-white p-4 rounded-xl border transition-all duration-200 hover:shadow-md space-y-2 relative overflow-hidden ${v.id === currentSelectedValueId ? 'border-amber-500 ring-2 ring-amber-500/20 shadow-md' : 'border-slate-200 hover:border-amber-300'}" data-id="${v.id}">
+                    <div class="flex justify-between items-start">
+                        <span class="text-2xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">${v.num}</span>
+                        <span class="text-3xs bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">${v.cluster}</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-sm leading-tight">${v.title}</h3>
+                        <span class="text-xs text-slate-400 italic font-normal">${v.english}</span>
+                    </div>
+                    <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">${v.desc}</p>
+                    <div class="pt-1 flex items-center justify-between text-2xs font-bold text-amber-600">
+                        <span>Klik untuk detail &amp; BARS</span>
+                        <span>→</span>
+                    </div>
+                </div>
+            `).join('');
+
+            grid.querySelectorAll('.value-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = parseInt(card.getAttribute('data-id'));
+                    currentSelectedValueId = id;
+                    renderValuesCards();
+                    updateDetailView(id);
+                    document.getElementById('bars-value-select').value = id;
+                    updateBARSDisplay();
+                });
+            });
+        }
+
+        function updateDetailView(id) {
+            const item = valuesData.find(v => v.id === id);
+            if (!item) return;
+
+            document.getElementById('detail-num').innerText = item.num;
+            document.getElementById('detail-title').innerText = item.title;
+            document.getElementById('detail-english').innerText = `(${item.english})`;
+            document.getElementById('detail-desc').innerText = item.desc;
+            document.getElementById('detail-internal').innerText = item.internal;
+            document.getElementById('detail-external').innerText = item.external;
+        }
+
+        function initRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: valuesData.map(v => v.title.length > 15 ? v.title.substring(0, 15) + '...' : v.title),
+                    datasets: [{
+                        label: 'Target Impl. Ideal (%)',
+                        data: [95, 90, 95, 88, 85, 92, 90],
+                        backgroundColor: 'rgba(217, 119, 6, 0.25)',
+                        borderColor: '#d97706',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#ffffff',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#d97706'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#f1f5f9' },
+                            pointLabels: {
+                                font: { size: 10, weight: 'bold' },
+                                color: '#334155'
+                            },
+                            ticks: { display: false, min: 0, max: 100 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Target Penegakan: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // MODULE 2: BARS LOGIC
+        function populateBARSSelect() {
+            const select = document.getElementById('bars-value-select');
+            select.innerHTML = valuesData.map(v => `
+                <option value="${v.id}">${v.num}: ${v.title} (${v.english})</option>
+            `).join('');
+
+            select.addEventListener('change', (e) => {
+                currentSelectedValueId = parseInt(e.target.value);
+                updateBARSDisplay();
+                updateDetailView(currentSelectedValueId);
+                renderValuesCards();
+            });
+
+            document.getElementById('bars-slider').addEventListener('input', () => {
+                updateBARSDisplay();
+            });
+        }
+
+        function updateBARSDisplay() {
+            const valId = parseInt(document.getElementById('bars-value-select').value);
+            const level = parseInt(document.getElementById('bars-slider').value);
+            const item = valuesData.find(v => v.id === valId);
+            if (!item) return;
+
+            const badgeNames = {
+                1: "Skala 1: Sangat Buruk (Melanggar)",
+                2: "Skala 2: Perlu Perbaikan (Pasif)",
+                3: "Skala 3: Memenuhi Ekspektasi (Konsisten)",
+                4: "Skala 4: Melebihi Ekspektasi (Proaktif)",
+                5: "Skala 5: Sangat Unggul (Role Model)"
+            };
+
+            const categories = {
+                1: "Risiko Etika / Pelanggaran",
+                2: "Kepatuhan Formalitas",
+                3: "Standar Operasional Konsisten",
+                4: "Penggerak Efisiensi Unit",
+                5: "Role Model Korporasi"
+            };
+
+            const actions = {
+                1: "Konseling & Peringatan Terulis",
+                2: "Pelatihan & Pendampingan Khusus",
+                3: "Pertahankan Kinerja Standard",
+                4: "Nominator Culture Champion",
+                5: "Kandidat Promosi & Reward"
+            };
+
+            document.getElementById('bars-level-badge').innerText = badgeNames[level];
+            document.getElementById('bars-value-name-tag').innerText = item.title;
+            document.getElementById('bars-behavior-text').innerText = item.bars[level] || item.bars[3];
+            document.getElementById('bars-category-tag').innerText = categories[level];
+            document.getElementById('bars-action-tag').innerText = actions[level];
+
+            // Update KBI List
+            const kbiList = document.getElementById('bars-kbi-list');
+            kbiList.innerHTML = item.kbi.map(k => `
+                <li class="flex items-start space-x-1.5">
+                    <span class="text-amber-400 font-bold">•</span>
+                    <span>${k}</span>
+                </li>
+            `).join('');
+        }
+
+        function renderBARSTable() {
+            const tbody = document.getElementById('bars-table-body');
+            tbody.innerHTML = valuesData.map(v => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="px-4 py-3 font-bold text-slate-900 border-r border-slate-200">
+                        ${v.num}: ${v.title}<br>
+                        <span class="text-3xs text-slate-400 font-normal italic">${v.english}</span>
+                    </td>
+                    <td class="px-4 py-3 bg-red-50/30 text-red-900 border-r border-slate-200">${v.bars[1]}</td>
+                    <td class="px-4 py-3 bg-blue-50/30 text-blue-900 border-r border-slate-200">${v.bars[3]}</td>
+                    <td class="px-4 py-3 bg-emerald-50/30 text-emerald-900">${v.bars[5]}</td>
+                </tr>
+            `).join('');
+        }
+
+
+        // MODULE 3: BENCHMARK LOGIC
+        function initBenchmarkChart() {
+            const ctx = document.getElementById('benchmarkChart').getContext('2d');
+            benchmarkChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Integritas Internal', 'Keunggulan Operasional', 'Pemberdayaan Ekosistem', 'Kontribusi Nasional'],
+                    datasets: [
+                        {
+                            label: 'PT Cahaya Langit Cemerlang',
+                            data: [95, 90, 98, 85],
+                            backgroundColor: '#d97706'
+                        },
+                        {
+                            label: 'Sinar Mas Group',
+                            data: [92, 94, 75, 88],
+                            backgroundColor: '#475569'
+                        },
+                        {
+                            label: 'PT Astra International Tbk',
+                            data: [90, 95, 82, 96],
+                            backgroundColor: '#0284c7'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { font: { size: 10 } } },
+                        x: { ticks: { font: { size: 10, weight: 'bold' } } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    }
+                }
+            });
+        }
+
+
+        // MODULE 4: DIAGNOSTIC & BARRIERS LOGIC
+        function renderDiagnosticChecklist() {
+            const container = document.getElementById('diagnostic-checklist');
+            container.innerHTML = diagnosticSymptoms.map(s => `
+                <label class="flex items-start space-x-3 p-3 bg-slate-50 hover:bg-amber-50/50 rounded-xl border border-slate-200 cursor-pointer transition">
+                    <input type="checkbox" class="diagnostic-chk mt-1 w-4 h-4 text-amber-600 rounded border-slate-300 focus:ring-amber-500" data-barrier="${s.barrierId}">
+                    <span class="text-xs text-slate-700 leading-snug">${s.text}</span>
+                </label>
+            `).join('');
+
+            container.querySelectorAll('.diagnostic-chk').forEach(chk => {
+                chk.addEventListener('change', updateDiagnosticResults);
+            });
+
+            document.getElementById('reset-diagnostic-btn').addEventListener('click', () => {
+                container.querySelectorAll('.diagnostic-chk').forEach(chk => chk.checked = false);
+                updateDiagnosticResults();
+            });
+        }
+
+        function updateDiagnosticResults() {
+            const checked = Array.from(document.querySelectorAll('.diagnostic-chk:checked'));
+            const resultBox = document.getElementById('diagnostic-result');
+            const recList = document.getElementById('diagnostic-recommendations');
+
+            if (checked.length === 0) {
+                resultBox.classList.add('hidden');
+                return;
+            }
+
+            const barrierIds = [...new Set(checked.map(c => parseInt(c.getAttribute('data-barrier'))))];
+            const matchedBarriers = barriersData.filter(b => barrierIds.includes(b.id));
+
+            recList.innerHTML = matchedBarriers.map(b => `
+                <li><strong>${b.title}:</strong> ${b.mitigation}</li>
+            `).join('');
+
+            resultBox.classList.remove('hidden');
+        }
+
+        function renderBarriersCards() {
+            const container = document.getElementById('barriers-cards-container');
+            container.innerHTML = barriersData.map(b => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <h3 class="font-bold text-slate-900 text-sm">${b.title}</h3>
+                        <span class="text-3xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${b.category}</span>
+                    </div>
+                    <div class="space-y-2 text-xs">
+                        <div>
+                            <strong class="text-slate-800 block">Akar Masalah:</strong>
+                            <p class="text-slate-600">${b.rootCause}</p>
+                        </div>
+                        <div>
+                            <strong class="text-slate-800 block">Dampak Tingkat Dua (Ripple Effect):</strong>
+                            <p class="text-red-700 font-medium">${b.rippleEffect}</p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 bg-amber-50/50 p-2.5 rounded-lg border border-amber-100">
+                            <strong class="text-amber-900 block">Strategi Mitigasi Terstruktur:</strong>
+                            <p class="text-slate-700 font-medium">${b.mitigation}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+
+        // MODULE 5: HR LIFECYCLE & CALCULATOR LOGIC
+        function setupCalculatorListeners() {
+            document.getElementById('okr-slider').addEventListener('input', calculateDualTrackScore);
+            document.getElementById('bars-calc-slider').addEventListener('input', calculateDualTrackScore);
+
+            document.querySelectorAll('.weight-preset-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.weight-preset-btn').forEach(b => {
+                        b.classList.remove('bg-amber-500', 'text-slate-950', 'font-bold');
+                        b.classList.add('bg-slate-200', 'text-slate-700', 'font-medium');
+                    });
+                    btn.classList.remove('bg-slate-200', 'text-slate-700', 'font-medium');
+                    btn.classList.add('bg-amber-500', 'text-slate-950', 'font-bold');
+
+                    const okrW = parseInt(btn.getAttribute('data-okr')) / 100;
+                    const barsW = parseInt(btn.getAttribute('data-bars')) / 100;
+                    currentWeightOKR = okrW;
+                    currentWeightBARS = barsW;
+
+                    document.getElementById('weight-label').innerText = `OKR: ${okrW * 100}% | BARS: ${barsW * 100}%`;
+                    calculateDualTrackScore();
+                });
+            });
+        }
+
+        function calculateDualTrackScore() {
+            const okrValue = parseFloat(document.getElementById('okr-slider').value);
+            const barsValue = parseFloat(document.getElementById('bars-calc-slider').value);
+
+            document.getElementById('okr-val-text').innerText = `${okrValue}%`;
+            document.getElementById('bars-val-text').innerText = `Skala ${barsValue.toFixed(1)}`;
+
+            // Convert BARS (1-5) to percentage (1 -> 20%, 5 -> 100%)
+            const barsPct = (barsValue / 5) * 100;
+
+            const okrContrib = okrValue * currentWeightOKR;
+            const barsContrib = barsPct * currentWeightBARS;
+            const totalScore = okrContrib + barsContrib;
+
+            document.getElementById('total-score-display').innerText = `${totalScore.toFixed(1)}%`;
+            document.getElementById('score-breakdown-text').innerText = `(OKR ${okrContrib.toFixed(1)}% + BARS ${barsContrib.toFixed(1)}%)`;
+
+            // Category & 9-Box logic
+            let category = "";
+            let bonusEligible = "";
+            let nineboxTag = "";
+            let nineboxDesc = "";
+            const warningBox = document.getElementById('toxic-high-performer-warning');
+
+            if (okrValue >= 100 && barsValue < 2.5) {
+                // Toxic High Performer
+                category = "Toksik (Target Tinggi, Nilai Buruk)";
+                bonusEligible = "❌ Bonus Ditahan & Wajib Konseling Etika";
+                nineboxTag = "Toxic High-Performer";
+                nineboxDesc = "Pencapaian angka tinggi dicapai dengan melanggar nilai atau perilaku merusak. Membutuhkan intervensi etika segera.";
+                warningBox.classList.remove('hidden');
+            } else {
+                warningBox.classList.add('hidden');
+                if (totalScore >= 90) {
+                    category = "Istimewa (Role Model)";
+                    bonusEligible = "✓ Berhak Bonus Maksimal & Promosi Karir";
+                    nineboxTag = "Star Model (Top Talent)";
+                    nineboxDesc = "Sangat unggul dalam hasil bisnis dan menjadi teladan budaya korporasi.";
+                } else if (totalScore >= 75) {
+                    category = "Sangat Baik (Exceeds)";
+                    bonusEligible = "✓ Berhak Bonus Penuh";
+                    nineboxTag = "High Performer / Solid Contributor";
+                    nineboxDesc = "Kinerja konsisten di atas rata-rata dengan penegakan nilai yang baik.";
+                } else if (totalScore >= 60) {
+                    category = "Cukup (Meets Target)";
+                    bonusEligible = "✓ Berhak Bonus Standar";
+                    nineboxTag = "Core Player";
+                    nineboxDesc = "Memenuhi ekspektasi pekerjaan standar. Perlu dorongan efisiensi dan inisiatif.";
+                } else {
+                    category = "Kurang (Needs Improvement)";
+                    bonusEligible = "❌ Pembinaan Khusus HR";
+                    nineboxTag = "Underperformer";
+                    nineboxDesc = "Membutuhkan Program Peningkatan Kinerja (PIP) baik pada aspek target maupun integritas.";
+                }
+            }
+
+            document.getElementById('score-category-display').innerText = category;
+            document.getElementById('bonus-eligibility-display').innerText = bonusEligible;
+            document.getElementById('ninebox-quadrant-tag').innerText = nineboxTag;
+            document.getElementById('ninebox-desc-text').innerText = nineboxDesc;
+        }
+
+        function renderLifecycleCards() {
+            const container = document.getElementById('lifecycle-cards');
+            container.innerHTML = lifecycleStages.map(s => `
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <span class="text-3xs font-bold uppercase tracking-wider bg-amber-500 text-slate-950 px-2 py-0.5 rounded">${s.badge}</span>
+                    <h4 class="font-bold text-slate-900 text-xs">${s.title}</h4>
+                    <span class="text-2xs text-amber-700 font-semibold block">${s.subtitle}</span>
+                    <p class="text-2xs text-slate-600 leading-relaxed">${s.desc}</p>
+                </div>
+            `).join('');
+        }
+
+
+        // MODULE 6: METROLOGY & PNPS LOGIC
+        function setupPNPSListeners() {
+            document.getElementById('pnps-promoters').addEventListener('input', calculatePNPS);
+            document.getElementById('pnps-passives').addEventListener('input', calculatePNPS);
+            document.getElementById('pnps-detractors').addEventListener('input', calculatePNPS);
+        }
+
+        function calculatePNPS() {
+            const promoters = parseFloat(document.getElementById('pnps-promoters').value) || 0;
+            const passives = parseFloat(document.getElementById('pnps-passives').value) || 0;
+            const detractors = parseFloat(document.getElementById('pnps-detractors').value) || 0;
+
+            const total = promoters + passives + detractors;
+            if (total === 0) return;
+
+            const promoterPct = (promoters / total) * 100;
+            const detractorPct = (detractors / total) * 100;
+            const pnps = Math.round(promoterPct - detractorPct);
+
+            const scoreDisplay = document.getElementById('pnps-score-result');
+            scoreDisplay.innerText = `${pnps > 0 ? '+' : ''}${pnps}`;
+
+            const statusTag = document.getElementById('pnps-status-tag');
+            const targetStatus = document.getElementById('pnps-target-status');
+
+            if (pnps >= 50) {
+                statusTag.innerText = "Status: Sangat Unggul (World Class)";
+                statusTag.className = "text-xs font-bold text-emerald-800 block";
+                targetStatus.innerText = "✓ Memenuhi Target Kemitraan Strategis (≥ +50)";
+                targetStatus.className = "text-2xs text-emerald-600 block";
+            } else if (pnps >= 20) {
+                statusTag.innerText = "Status: Baik (Good)";
+                statusTag.className = "text-xs font-bold text-blue-800 block";
+                targetStatus.innerText = "⚠️ Perlu Peningkatan Kecil menuju Target +50";
+                targetStatus.className = "text-2xs text-blue-600 block";
+            } else {
+                statusTag.innerText = "Status: Berisiko (Warning)";
+                statusTag.className = "text-xs font-bold text-red-800 block";
+                targetStatus.innerText = "❌ Di Bawah Target Strategis Korporasi";
+                targetStatus.className = "text-2xs text-red-600 block";
+            }
+        }
+
+        function initMetrologyChart() {
+            const ctx = document.getElementById('metrologyChart').getContext('2d');
+            metrologyChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['OHI Internal (Kesehatan Budaya)', 'PNPS Kemitraan Ekosistem', 'Retensi Mitra Berintegritas', 'Kepatuhan Etika (Zero Defect)'],
+                    datasets: [{
+                        data: [82, 75, 88, 100],
+                        backgroundColor: ['#0d9488', '#d97706', '#0284c7', '#10b981'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 10, font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.label}: ${context.raw}% Target`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // MODULE 7: RECOMMENDATIONS LOGIC
+        function renderRecommendations() {
+            const container = document.getElementById('recommendations-container');
+            container.innerHTML = recommendationsData.map(r => `
+                <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 hover:bg-amber-50/40 rounded-xl border border-slate-200 transition gap-4">
+                    <div class="space-y-1 max-w-3xl">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xs font-bold bg-slate-900 text-amber-400 px-2 py-0.5 rounded">${r.num}</span>
+                            <h3 class="font-bold text-slate-900 text-sm">${r.title}</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">${r.desc}</p>
+                    </div>
+                    <div class="flex flex-row md:flex-col items-start md:items-end justify-between text-2xs space-y-1">
+                        <span class="bg-amber-100 text-amber-900 font-bold px-2 py-1 rounded">${r.timeline}</span>
+                        <span class="text-slate-500 font-semibold">${r.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
